@@ -5,6 +5,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  void answerQuestion() {
+    print('selected answer');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,15 +21,17 @@ class MyApp extends StatelessWidget {
             Text('The first question'),
             ElevatedButton(
               child: Text('answer 1'),
-              onPressed: null,
+              onPressed: answerQuestion,
             ),
             ElevatedButton(
               child: Text('answer 2'),
-              onPressed: null,
+              onPressed: () => print('selected 2. answer'),
             ),
             ElevatedButton(
               child: Text('answer 3'),
-              onPressed: null,
+              onPressed: () {
+                print('selected 3. answer');
+              },
             ),
           ],
         ),
