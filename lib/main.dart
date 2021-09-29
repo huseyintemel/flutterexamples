@@ -39,7 +39,7 @@ class MyAppState extends State<MyApp> {
 
     void answerQuestion() {
       setState(() {
-        questionIndex = (questionIndex + 1) % 4; //changes question on the screen with StatefulWidget
+        questionIndex = questionIndex + 1; //changes question on the screen with StatefulWidget
       });
     }
 
@@ -48,14 +48,14 @@ class MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
+        body: questionIndex < questions.length ? Column(
           children: [
             Question(questions[questionIndex]['questionText'] as String),
             ...(questions[questionIndex]['answers'] as List<String>).map((answer){
                return Answer(answer,answerQuestion);
             }).toList()
           ],
-        ),
+        ) : const Center(child: Text('Questions Finished'),),
       ),
     );
   }
