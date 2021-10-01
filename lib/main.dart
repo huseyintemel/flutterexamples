@@ -63,7 +63,9 @@ class MyAppState extends State<MyApp> {
 */
 
 import 'package:flutter/material.dart';
-import './widgets/user_transactions.dart';
+import './widgets/new_transaction.dart';
+import './models/transaction.dart';
+import './widgets/transaction_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -79,20 +81,70 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => MyHomePageState();
+}
+
+class MyHomePageState extends State<MyHomePage> {
+
+  final List<Transaction> userTransactions = [
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Weekly Groceries',
+      amount: 16.53,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void addTransaction(String title,double amount){
+    final newTransaction = Transaction(
+      title: title,
+      amount: amount,
+      date: DateTime.now(),
+      id: DateTime.now().toString()
+    );
+
+    setState(() {
+      userTransactions.add(newTransaction);
+    });
+  }  
+
+  void showAddNewTransaction(BuildContext context){
+    showModalBottomSheet(context: context, builder: (builder){
+      return GestureDetector(
+        onTap: () {},
+        child: NewTransaction(addTransaction),
+        behavior: HitTestBehavior.opaque,
+      );
+    }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter App'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.add),onPressed:()=>showAddNewTransaction(context),)
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            UserTransactions(),
+            TransactionList(userTransactions),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed:()=>showAddNewTransaction(context),),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
