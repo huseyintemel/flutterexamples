@@ -115,11 +115,11 @@ class MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void addTransaction(String title,double amount){
+  void addTransaction(String title,double amount,DateTime chosenDate){
     final newTransaction = Transaction(
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: chosenDate,
       id: DateTime.now().toString()
     );
 
