@@ -180,7 +180,7 @@ class MyHomePageState extends State<MyHomePage> {
       child: TransactionList(userTransactions,deleteTransaction)
     ); 
 
-    List<Widget> buildPortraitContent(MediaQueryData mediaQuery,AppBar appBar,Widget listWidget){
+    List<Widget> buildPortraitContent(MediaQueryData mediaQuery,PreferredSizeWidget appBar,Widget listWidget){
       return[
         Container(
             height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.3,
@@ -190,7 +190,7 @@ class MyHomePageState extends State<MyHomePage> {
       ];
     }
 
-    List<Widget> buildLandscapeContent(MediaQueryData mediaQuery,AppBar appBar,Widget listWidget){
+    List<Widget> buildLandscapeContent(MediaQueryData mediaQuery,PreferredSizeWidget appBar,Widget listWidget){
       return [
         showChart ?  
         Container(      

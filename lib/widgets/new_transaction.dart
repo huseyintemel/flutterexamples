@@ -47,7 +47,12 @@ class _NewTransactionState extends State<NewTransaction> {
     return SingleChildScrollView(
       child: Card(
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.only(
+            top:16,
+            right: 16,
+            left: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
