@@ -91,6 +91,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  bool showChart = false;
 
   final List<Transaction> userTransactions = [
     /*
@@ -147,6 +148,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
         title: const Text('Flutter App'),
         actions: <Widget>[
@@ -158,11 +160,29 @@ class MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
+            if(isLandscape) Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+              const Text('Show Chart'),
+              Switch(value: showChart, onChanged: (val){
+                setState(() {
+                  showChart = val;
+                });
+              })
+            ],),
+            if(!isLandscape) Container(
               height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.3,
               child: Chart(recentTransactions)
             ),
-            Container(
+            if(!isLandscape) Container(
+              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+              child: TransactionList(userTransactions,deleteTransaction)
+            ),
+            if(isLandscape) showChart ?  Container(
+              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+              child: Chart(recentTransactions)
+            )
+            : Container(
               height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
               child: TransactionList(userTransactions,deleteTransaction)
             ),
