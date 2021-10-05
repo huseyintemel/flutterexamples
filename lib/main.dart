@@ -175,6 +175,33 @@ class MyHomePageState extends State<MyHomePage> {
           IconButton(icon: Icon(Icons.add),onPressed:()=>showAddNewTransaction(context),)
         ],
     );
+    final listWidget = Container(
+      height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+      child: TransactionList(userTransactions,deleteTransaction)
+    ); 
+
+    List<Widget> buildPortraitContent(MediaQueryData mediaQuery,AppBar appBar,Widget listWidget){
+      return[
+        Container(
+            height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.3,
+            child: Chart(recentTransactions),
+        ),
+        listWidget
+      ];
+    }
+
+    List<Widget> buildLandscapeContent(MediaQueryData mediaQuery,AppBar appBar,Widget listWidget){
+      return [
+        showChart ?  
+        Container(      
+          height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+          child: Chart(recentTransactions)
+        )
+        :listWidget,
+      ];
+    }
+
+
     final appBody = 
     SafeArea(child : 
       SingleChildScrollView(
@@ -190,22 +217,8 @@ class MyHomePageState extends State<MyHomePage> {
                 });
               })
             ],),
-            if(!isLandscape) Container(
-              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.3,
-              child: Chart(recentTransactions)
-            ),
-            if(!isLandscape) Container(
-              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
-              child: TransactionList(userTransactions,deleteTransaction)
-            ),
-            if(isLandscape) showChart ?  Container(
-              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
-              child: Chart(recentTransactions)
-            )
-            : Container(
-              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
-              child: TransactionList(userTransactions,deleteTransaction)
-            ),
+            if(!isLandscape) ...buildPortraitContent(mediaQuery, appBar, listWidget),
+            if(isLandscape) ...buildLandscapeContent(mediaQuery,appBar,listWidget),
           ],
         ),
       )
