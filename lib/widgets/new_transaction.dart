@@ -41,41 +41,43 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: const InputDecoration(labelText: 'Title'),
-              controller: titleController,
-              onSubmitted: (val)=>submitData(),
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Amount'),
-              controller: amountController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (val)=>submitData(),
-            ),
-            Row(children: <Widget>[
-              Expanded(child: Text(selectedDate == null ? 'No Date Chosen!' : 'Picked Date: ${DateFormat.yMd().format(selectedDate!)}',),),
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Card(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: const InputDecoration(labelText: 'Title'),
+                controller: titleController,
+                onSubmitted: (val)=>submitData(),
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Amount'),
+                controller: amountController,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (val)=>submitData(),
+              ),
+              Row(children: <Widget>[
+                Expanded(child: Text(selectedDate == null ? 'No Date Chosen!' : 'Picked Date: ${DateFormat.yMd().format(selectedDate!)}',),),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: showDateChooser,
+                    child: const Text('Choose Date'),
                   ),
-                  onPressed: showDateChooser,
-                  child: const Text('Choose Date'),
-                ),
+                )
+              ],),
+              ElevatedButton(
+                onPressed: submitData,
+                child: const Text('Add Transaction'),
               )
-            ],),
-            ElevatedButton(
-              onPressed: submitData,
-              child: const Text('Add Transaction'),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
